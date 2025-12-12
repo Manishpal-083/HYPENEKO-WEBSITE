@@ -4,9 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hypencko | Wear. Flex. Repeat</title>
+    <title>Hypeneko | Wear. Flex. Repeat</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Fonts (Luxury Zara style) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -14,49 +21,36 @@
     <!-- Top Header -->
     <header class="top">
         <h1>Hypeneko</h1>
-        <p>Wear. flex. repeat</p>
+        <p>Wear. Flex. Repeat</p>
     </header>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-left">
-            <a href="#" class="logo">HN</a>
-            <!-- 👈 Yahan Logo add kiya -->
+            <a href="/" class="logo">HN</a>
             <a href="#">Male</a>
             <a href="#">Female</a>
         </div>
+
         <div class="nav-right">
             <input type="text" class="searchbar" placeholder="SEARCH">
-            <a href="#">Login</a>
-            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+            <a href="login.html">Login</a>
+            <a href="cart.html"><i class="fas fa-shopping-bag"></i></a>
         </div>
     </nav>
 
-
-    <!-- Product Section -->
-    <section class="products">
-        <!-- T-shirt 1 -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="ANGEL_FRONT.png" alt="Basic Black Tee Front" class="front">
-                <img src="ANGEL_BACK.png" alt="Basic Black Tee Back" class="back">
-            </div>
-            <h2>ANGEL Black Tee</h2>
-            <p>Premium cotton black tee with minimal Fabrizion chest logo.</p>
-            <span class="price">₹699</span>
-        </div>
-
-        <!-- T-shirt 2 -->
-        <div class="product-card">
-            <div class="product-image">
-                <img src="MOON_FRONT.png" alt="Moon Graphic Tee Front" class="front">
-                <img src="MOON_BACK.png" alt="Moon Graphic Tee Back" class="back">
-            </div>
-            <h2>Moon Graphic Tee</h2>
-            <p>Oversized streetwear with bold wolf & moon back print.</p>
-            <span class="price">₹699</span>
+    <!-- HERO BANNER (Optional Zara look) -->
+    <section class="hero-banner">
+        <div class="hero-text">
+            <h2>New Arrivals</h2>
+            <p>Minimal. Premium. Everyday Luxury.</p>
         </div>
     </section>
 
+    <!-- Product Section -->
+    <section class="products" id="products-container">
+        <!-- Dynamic products will load here -->
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -66,10 +60,51 @@
             <a href="#">Privacy</a>
             <a href="#">Terms</a>
         </div>
-        <p>© 2025 Hypencko. All rights reserved.</p>
+        <p>© 2025 Hypeneko. All rights reserved.</p>
     </footer>
 
 </body>
 
+<!-- Dynamic Product Loading Script -->
+<script>
+    const apiBase = '/api';
+
+    async function loadProducts() {
+        try {
+            const res = await fetch(apiBase + '/products');
+            const products = await res.json();
+
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+
+                card.innerHTML = `
+                    <div class="product-image">
+                        <img src="${p.image}" alt="${p.name}" class="front">
+                        <img src="${p.image}" alt="${p.name}" class="back">
+                    </div>
+                    <h2>${p.name}</h2>
+                    <p>${p.description || ''}</p>
+                    <span class="price">₹${p.price}</span>
+                `;
+
+                // Click → go to product page
+                card.onclick = () => {
+                    window.location.href = "product.html?id=" + p.id;
+                };
+
+                container.appendChild(card);
+            });
+
+        } catch (error) {
+            console.error("Error loading products:", error);
+        }
+    }
+
+    window.onload = loadProducts;
+</script>
 
 </html>

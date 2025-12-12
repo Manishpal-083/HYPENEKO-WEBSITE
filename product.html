@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hypeneko | Product</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="/" class="logo">HN</a>
+            <a href="#">Male</a>
+            <a href="#">Female</a>
+        </div>
+
+        <div class="nav-right">
+            <input type="text" class="searchbar" placeholder="SEARCH" />
+            <a href="login.html">Login</a>
+            <a href="cart.html"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+    </nav>
+
+    <!-- Product Page Container -->
+    <section class="product-page" id="product-container">
+        <!-- Loaded dynamically -->
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 Hypeneko. All rights reserved.</p>
+    </footer>
+
+</body>
+
+<script>
+    const apiBase = '/api';
+
+    function getQueryParam(param) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(param);
+    }
+
+    async function loadProduct() {
+        const id = getQueryParam('id');
+        if (!id) return;
+
+        const res = await fetch(`/api/product/${id}`);
+        const p = await res.json();
+
+        const container = document.getElementById("product-container");
+
+        container.innerHTML = `
+            <div class="product-detail">
+                <div class="product-images">
+                    <img src="${p.image}" alt="${p.name}" class="big-img">
+                </div>
+
+                <div class="product-info">
+                    <h1>${p.name}</h1>
+                    <h2>₹${p.price}</h2>
+                    <p class="desc">${p.description || ""}</p>
+
+                    <button class="add-cart-btn" onclick="addToCart(${p.id})">
+                        ADD TO CART
+                    </button>
+
+                    <p class="sku">SKU: ${p.sku}</p>
+                </div>
+            </div>
+        `;
+    }
+
+    async function addToCart(pid) {
+        await fetch("/api/cart", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-Token": localStorage.getItem("auth_token") || ""
+            },
+            body: JSON.stringify({
+                product_id: pid,
+                qty: 1
+            })
+        });
+
+        alert("Added to cart!");
+    }
+
+    window.onload = loadProduct;
+</script>
+
+</html>

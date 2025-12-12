@@ -241,3 +241,205 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+
+/* Product Page Layout */
+
+.product-page {
+    display: flex;
+    justify-content: center;
+    padding: 60px;
+}
+
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    width: 85%;
+}
+
+.product-images .big-img {
+    width: 100%;
+    border: 1px solid #eee;
+}
+
+.product-info h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+}
+
+.product-info h2 {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.product-info .desc {
+    font-size: 14px;
+    color: #555;
+    margin: 15px 0;
+}
+
+.add-cart-btn {
+    background: #000;
+    color: white;
+    padding: 14px 25px;
+    border: none;
+    margin-top: 15px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    width: 250px;
+}
+
+.add-cart-btn:hover {
+    opacity: 0.7;
+}
+
+.sku {
+    font-size: 12px;
+    margin-top: 15px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+
+/* CART PAGE */
+
+.cart-page {
+    padding: 60px;
+}
+
+.cart-page h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.cart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.cart-row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.cart-img {
+    width: 120px;
+    border: 1px solid #eee;
+    margin-right: 20px;
+}
+
+.cart-info h2 {
+    font-size: 18px;
+}
+
+.cart-info p {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.remove-btn {
+    margin-left: auto;
+    padding: 8px 12px;
+    border: none;
+    background: #000;
+    color: white;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    opacity: 0.7;
+}
+
+.cart-summary {
+    margin-top: 40px;
+    text-align: right;
+}
+
+.checkout-btn {
+    margin-top: 15px;
+    padding: 14px 22px;
+    background: #000;
+    color: #fff;
+    border: none;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.checkout-btn:hover {
+    opacity: 0.7;
+}
+
+
+/* AUTH (Signup/Login) - Zara minimal center */
+
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+    min-height: calc(100vh - 160px);
+}
+
+.auth-card {
+    width: 420px;
+    border: 1px solid #f0f0f0;
+    padding: 40px 36px;
+    background: #fff;
+    text-align: left;
+}
+
+.auth-card h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.auth-card .muted {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.auth-card label {
+    font-size: 12px;
+    color: #333;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.auth-card input[type="email"],
+.auth-card input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e8e8e8;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.auth-btn {
+    width: 100%;
+    background: #000;
+    color: #fff;
+    padding: 12px 14px;
+    border: none;
+    margin-top: 12px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.auth-btn:hover {
+    opacity: 0.85;
+}
+
+.auth-card .small {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #666;
+}

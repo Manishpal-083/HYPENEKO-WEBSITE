@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Hypeneko</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="/" class="logo">HN</a>
+            <a href="#">Male</a>
+            <a href="#">Female</a>
+        </div>
+
+        <div class="nav-right">
+            <a href="login.html">Login</a>
+            <a href="cart.html"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+    </nav>
+
+    <section class="cart-page">
+        <h1>Your Cart</h1>
+
+        <div id="cart-container" class="cart-container">
+            <!-- cart items load here -->
+        </div>
+
+        <div class="cart-summary">
+            <h2>Total: ₹<span id="cart-total">0</span></h2>
+            <button class="checkout-btn">PROCEED TO CHECKOUT</button>
+        </div>
+    </section>
+
+</body>
+
+<script>
+    const apiBase = '/api';
+
+    async function loadCart() {
+        const res = await fetch(apiBase + '/cart', {
+            method: "GET",
+            headers: {
+                "X-Auth-Token": localStorage.getItem("auth_token") || ""
+            }
+        });
+
+        const data = await res.json();
+
+        const container = document.getElementById("cart-container");
+        container.innerHTML = "";
+
+        data.items.forEach(item => {
+            const row = document.createElement('div');
+            row.className = "cart-row";
+
+            row.innerHTML = `
+                <img src="${item.product.image}" class="cart-img">
+
+                <div class="cart-info">
+                    <h2>${item.product.name}</h2>
+                    <p>₹${item.product.price}</p>
+                </div>
+
+                <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+            `;
+
+            container.appendChild(row);
+        });
+
+        document.getElementById("cart-total").innerText = data.total;
+    }
+
+    async function removeItem(id) {
+        await fetch(apiBase + "/cart/" + id, {
+            method: "DELETE"
+        });
+        loadCart();
+    }
+
+    window.onload = loadCart;
+</script>
+
+</html>

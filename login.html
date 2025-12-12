@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login | Hypeneko</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="/" class="logo">HN</a>
+        </div>
+        <div class="nav-right">
+            <a href="signup.html">Sign up</a>
+        </div>
+    </nav>
+
+    <main class="auth-page">
+        <div class="auth-card">
+            <h1>Welcome Back</h1>
+            <p class="muted">Log in to continue</p>
+
+            <form id="login-form">
+                <label>Email</label>
+                <input type="email" id="email" required placeholder="you@example.com" />
+
+                <label>Password</label>
+                <input type="password" id="password" required placeholder="Your password" />
+
+                <button type="submit" class="auth-btn">Log in</button>
+            </form>
+
+            <p class="muted small">Don't have an account? <a href="signup.html">Create one</a></p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Hypeneko</p>
+    </footer>
+
+    <script>
+        const apiBase = '/api';
+
+        document.getElementById('login-form').addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const res = await fetch(apiBase + '/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password
+                    })
+                });
+                const data = await res.json();
+                if (res.ok && data.token) {
+                    localStorage.setItem('auth_token', data.token);
+                    alert('Login successful');
+                    window.location.href = '/';
+                } else {
+                    alert(data.error || 'Login failed');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Network error');
+            }
+        });
+    </script>
+</body>
+
+</html>
